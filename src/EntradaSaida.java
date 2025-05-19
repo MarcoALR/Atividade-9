@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class IOUtils {
+public class EntradaSaida {
     public static String lerString(String mensagem) {
         return JOptionPane.showInputDialog(null, mensagem);
     }

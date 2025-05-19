@@ -6,7 +6,7 @@ public class Campeonato {
 
     public void cadastrarTimes() {
         while (times.size() < 10) {
-            String nome = IOUtils.lerString("Digite o nome do time (ou clique Cancelar para sair):");
+            String nome = EntradaSaida.lerString("Digite o nome do time:");
             if (nome == null || nome.trim().isEmpty()) break;
             times.add(new Time(nome.trim()));
         }
@@ -14,16 +14,16 @@ public class Campeonato {
 
     public void simularJogo() {
         if (times.size() < 2) {
-            IOUtils.exibirMensagem("Cadastre pelo menos 2 times primeiro.");
+            EntradaSaida.exibirMensagem("Cadastre pelo menos 2 times primeiro.");
             return;
         }
 
         listarTimes();
-        int i = IOUtils.lerInteiro("Índice do primeiro time:");
-        int j = IOUtils.lerInteiro("Índice do segundo time:");
+        int i = EntradaSaida.lerInteiro("Índice do primeiro time:");
+        int j = EntradaSaida.lerInteiro("Índice do segundo time:");
 
         if (i == j || i < 0 || j < 0 || i >= times.size() || j >= times.size()) {
-            IOUtils.exibirMensagem("Selecione dois times diferentes válidos.");
+            EntradaSaida.exibirMensagem("Selecione dois times diferentes válidos.");
             return;
         }
 
@@ -31,14 +31,14 @@ public class Campeonato {
         Time t2 = times.get(j);
 
         if (jogoJaRealizado(t1, t2)) {
-            IOUtils.exibirMensagem("Este jogo já foi realizado! Escolha outra dupla de times.");
+            EntradaSaida.exibirMensagem("Este jogo já foi realizado! Escolha outra dupla de times.");
             return;
         }
 
         Jogo jogo = new Jogo(t1, t2);
         jogo.simular();
         jogos.add(jogo);
-        IOUtils.exibirMensagem(jogo.getResultado());
+        EntradaSaida.exibirMensagem(jogo.getResultado());
     }
 
     public void listarTimes() {
@@ -57,7 +57,7 @@ public class Campeonato {
 
     public void exibirTabela() {
         System.out.println("\nTABELA DO CAMPEONATO:");
-        System.out.println("Nome        VIT EMP DER GP  GC  PTS");
+        System.out.println("Nome      VIT    EMP    DER   GP    GC   PTS");
         for (Time t : times) {
             System.out.println(t);
         }
@@ -85,10 +85,10 @@ public class Campeonato {
             }
         }
 
-        StringBuilder sb = new StringBuilder("Campeão(ões):\n");
+        StringBuilder sb = new StringBuilder("Campeão):\n");
         for (Time t : campeoes) {
             sb.append(t.getNome()).append(" com ").append(t.getPontos()).append(" pontos\n");
         }
-        IOUtils.exibirMensagem(sb.toString());
+        EntradaSaida.exibirMensagem(sb.toString());
     }
 }

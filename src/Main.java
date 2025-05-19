@@ -3,14 +3,14 @@ public class Main {
         Campeonato campeonato = new Campeonato();
 
         while (true) {
-            int opcao = IOUtils.lerInteiro("Menu:\n1 - Cadastrar Times\n2 - Simular Jogos\n3 - Sair");
+            int opcao = EntradaSaida.lerInteiro("61 - Cadastrar Times\n2 - Simular Jogos\n3 - Sair");
             switch (opcao) {
                 case 1:
                     campeonato.cadastrarTimes();
                     break;
                 case 2:
                     if (campeonato.todosJogosRealizados()) {
-                        IOUtils.exibirMensagem("Todos os jogos foram realizados!");
+                        EntradaSaida.exibirMensagem("Todos os jogos foram realizados!");
                         campeonato.exibirCampeoes();
                     } else {
                         campeonato.simularJogo();
@@ -18,10 +18,10 @@ public class Main {
                     }
                     break;
                 case 3:
-                    IOUtils.exibirMensagem("Programa encerrado.");
+                    EntradaSaida.exibirMensagem("Programa encerrado.");
                     return;
                 default:
-                    IOUtils.exibirMensagem("Opção inválida.");
+                    EntradaSaida.exibirMensagem("Opção inválida.");
             }
         }
     }

@@ -1,10 +1,6 @@
 public class Time {
     private String nome;
-    private int vitorias;
-    private int empates;
-    private int derrotas;
-    private int golsPro;
-    private int golsContra;
+    private int vitorias, empates, derrotas, golsPro, golsContra;
 
     public Time(String nome) {
         this.nome = nome;
@@ -21,16 +17,14 @@ public class Time {
     public void registrarJogo(int golsFeitos, int golsSofridos) {
         golsPro += golsFeitos;
         golsContra += golsSofridos;
-        if (golsFeitos > golsSofridos) {
-            vitorias++;
-        } else if (golsFeitos == golsSofridos) {
-            empates++;
-        } else {
-            derrotas++;
-        }
+
+        if (golsFeitos > golsSofridos) vitorias++;
+        else if (golsFeitos == golsSofridos) empates++;
+        else derrotas++;
     }
 
     public String toString() {
-        return String.format("%-12s %3d %3d %3d %3d %3d %3d", nome, vitorias, empates, derrotas, golsPro, golsContra, getPontos());
+        return String.format("%-10s %3d %3d %3d %3d %3d %3d",
+                nome, vitorias, empates, derrotas, golsPro, golsContra, getPontos());
     }
 }
