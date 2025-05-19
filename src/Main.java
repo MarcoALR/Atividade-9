@@ -1,7 +1,6 @@
 public class Main {
     public static void main(String[] args) {
         Campeonato camp = new Campeonato();
-
         int opcao;
         do {
             String menu = "1 - Cadastrar Times\n2 - Simular Jogos\n3 - Sair";
