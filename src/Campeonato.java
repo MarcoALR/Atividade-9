@@ -4,91 +4,44 @@ public class Campeonato {
     private ArrayList<Time> times = new ArrayList<>();
     private ArrayList<Jogo> jogos = new ArrayList<>();
 
-    public void cadastrarTimes() {
-        while (times.size() < 10) {
-            String nome = IOUtils.lerString("Digite o nome do time (ou clique Cancelar para sair):");
-            if (nome == null || nome.trim().isEmpty()) break;
-            times.add(new Time(nome.trim()));
+    public void adicionarTime(String nome) {
+        if (times.size() < 10) times.add(new Time(nome));
+    }
+
+    public void listarTimes() {
+        for (int i = 0; i < times.size(); i++) {
+            System.out.println(i + " - " + times.get(i).getNome());
         }
     }
 
-    public void simularJogo() {
-        if (times.size() < 2) {
-            IOUtils.exibirMensagem("Cadastre pelo menos 2 times primeiro.");
-            return;
-        }
-
-        listarTimes();
-        int i = IOUtils.lerInteiro("Índice do primeiro time:");
-        int j = IOUtils.lerInteiro("Índice do segundo time:");
-
-        if (i == j || i < 0 || j < 0 || i >= times.size() || j >= times.size()) {
-            IOUtils.exibirMensagem("Selecione dois times diferentes válidos.");
-            return;
-        }
-
-        Time t1 = times.get(i);
-        Time t2 = times.get(j);
-
+    public void simularJogo(int i, int j) {
+        Time t1 = times.get(i), t2 = times.get(j);
         if (jogoJaRealizado(t1, t2)) {
-            IOUtils.exibirMensagem("Este jogo já foi realizado! Escolha outra dupla de times.");
+            EntradaSaida.exibirMensagem("Este jogo já foi realizado!");
             return;
         }
 
         Jogo jogo = new Jogo(t1, t2);
         jogo.simular();
         jogos.add(jogo);
-        IOUtils.exibirMensagem(jogo.getResultado());
-    }
-
-    public void listarTimes() {
-        System.out.println("\nTimes Cadastrados:");
-        for (int i = 0; i < times.size(); i++) {
-            System.out.println(i + " - " + times.get(i).getNome());
-        }
+        EntradaSaida.exibirMensagem(jogo.getResultado());
     }
 
     public boolean jogoJaRealizado(Time t1, Time t2) {
-        for (Jogo jogo : jogos) {
-            if (jogo.envolve(t1, t2)) return true;
+        for (Jogo j : jogos) {
+            if (j.envolve(t1, t2)) return true;
         }
         return false;
     }
 
     public void exibirTabela() {
-        System.out.println("\nTABELA DO CAMPEONATO:");
-        System.out.println("Nome        VIT EMP DER GP  GC  PTS");
+        System.out.println("Nome       VIT EMP DER GP  GC  PTS");
         for (Time t : times) {
             System.out.println(t);
         }
-        System.out.println();
     }
 
-    public boolean todosJogosRealizados() {
-        int totalTimes = times.size();
-        int maxJogos = totalTimes * (totalTimes - 1) / 2;
-        return jogos.size() >= maxJogos;
-    }
-
-    public void exibirCampeoes() {
-        int maiorPontuacao = -1;
-        ArrayList<Time> campeoes = new ArrayList<>();
-
-        for (Time t : times) {
-            int pts = t.getPontos();
-            if (pts > maiorPontuacao) {
-                campeoes.clear();
-                campeoes.add(t);
-                maiorPontuacao = pts;
-            } else if (pts == maiorPontuacao) {
-                campeoes.add(t);
-            }
-        }
-
-        StringBuilder sb = new StringBuilder("Campeão(ões):\n");
-        for (Time t : campeoes) {
-            sb.append(t.getNome()).append(" com ").append(t.getPontos()).append(" pontos\n");
-        }
-        IOUtils.exibirMensagem(sb.toString());
+    public ArrayList<Time> getTimes() {
+        return times;
     }
 }
